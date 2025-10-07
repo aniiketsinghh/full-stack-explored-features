@@ -1,16 +1,33 @@
 import { useState } from "react";
 import { X } from "lucide-react"; // for cross icon
+import axios from "axios";
+import { useNavigate } from "react-router";
 
 const CreateNote = ({ onClose, onSave }) => {
+  const navigate=useNavigate();
   const [note, setNote] = useState({
     title: "",
     description: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault();
     onSave(note);
-    onClose();
+    const response= await axios.post("http://localhost:4004/api/notes/add",
+      note,
+      {
+        headers:{
+          Authorization:`Bearer ${localStorage.getItem("token")}`
+        }
+      });
+      console.log(response.data);
+      if(response.data.success){
+        navigate("/");
+        onClose();
+      }else{
+        console.log("Error creating note:",response.data.message);
+      }
+    
   };
 
   return (

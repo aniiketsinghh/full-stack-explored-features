@@ -1,7 +1,7 @@
 
 import Note from "../Schemas/note.schema.js";
 
-export const createNote=async(req,middleware,res)=>{
+export const createNote=async(req,res)=>{
     try{
     const {title,description}=req.body;
     if(!title || !description){
@@ -13,6 +13,7 @@ export const createNote=async(req,middleware,res)=>{
         userId:req.user._id
     });
     newNote.save();
+    res.status(201).json({message:"Note created successfully",note:newNote,success:true});
 }
 catch(err){
     res.status(500).json({message:err.message});
