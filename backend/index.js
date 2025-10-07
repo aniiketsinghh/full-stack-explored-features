@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./DB/connectDB.js";
 import authRoutes from "./routes/auth.routes.js";
+import notesRoutes from "./routes/note.route.js";
 import cors from "cors";
 dotenv.config();
 const app=express();
@@ -16,6 +17,7 @@ app.get("/",(req,res)=>{
 });
 
 app.use("/api/auth",authRoutes);
+app.use("/api/notes",notesRoutes);
 
 connectDB().then(()=>{
     console.log("Connected to DB successfully");

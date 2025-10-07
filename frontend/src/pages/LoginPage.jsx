@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import axios from "axios";
+import { useAuth } from "../../context/useContext.jsx";
 
 const LoginPage=()=>{
+    const {login}=useAuth();
     const navigate=useNavigate();
     let [formData,setFormData]=useState({
         email:"",
@@ -14,6 +16,7 @@ const LoginPage=()=>{
         const response=await axios.post("http://localhost:4004/api/auth/login",formData);
         console.log(response.data);
         if(response.data.success){ 
+            login(response.data.user);
             localStorage.setItem("token",response.data.token);  
             navigate("/");
         }

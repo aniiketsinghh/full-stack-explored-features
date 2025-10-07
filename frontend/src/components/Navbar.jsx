@@ -1,7 +1,9 @@
 
 import { Link } from "react-router";
+import { useAuth } from "../../context/useContext.jsx";
 
 const Navbar = () => {
+  const { user } = useAuth();
   return (
     <nav className="fixed top-0 left-0 w-full bg-zinc-900/80 backdrop-blur-md shadow-md text-white z-50">
       <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
@@ -24,6 +26,7 @@ const Navbar = () => {
 
         {/* Right - Buttons + Name */}
         <div className="flex items-center gap-4">
+          {!user? (<>
           <Link
             to="/login"
             className="px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 transition-all duration-300 font-semibold shadow-md hover:shadow-lg"
@@ -36,9 +39,13 @@ const Navbar = () => {
           >
             Signup
           </Link>
-          <p className="font-semibold text-lg text-gray-300 hover:text-white transition-all duration-300">
-            Aniket Singh
+          </>):(<>
+            <p className="font-semibold text-lg text-gray-300 hover:text-white transition-all duration-300">
+            {user.name}
           </p>
+          </>)}
+          
+         
         </div>
       </div>
     </nav>
